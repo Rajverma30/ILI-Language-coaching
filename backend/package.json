@@ -5,8 +5,9 @@
   "description": "ILI Languages Platform - Centralized Backend API",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "vercel-build": "tsc",
     "build": "tsc",
+    "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit"
   },

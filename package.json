@@ -9,6 +9,8 @@
     "backend"
   ],
   "scripts": {
+    "vercel-build": "npm run build:backend",
+    "build": "npm run build:backend",
     "dev": "concurrently -n \"backend,customer,admin\" -c \"blue,green,magenta\" \"npm run dev:backend\" \"npm run dev:customer\" \"npm run dev:admin\"",
     "dev:frontends": "concurrently -n \"customer,admin\" -c \"green,magenta\" \"npm run dev:customer\" \"npm run dev:admin\"",
     "dev:customer": "npm --prefix customer-frontend run dev",
