@@ -1,0 +1,45 @@
+"use client";
+
+import React, { Suspense } from "react";
+import Link from "next/link";
+import { OnlineLeadForm } from "@/components/forms/OnlineLeadForm";
+import { Laptop, Building2 } from "lucide-react";
+
+export default function OnlineApplyPage() {
+  return (
+    <div className="min-h-screen bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-4 relative">
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="absolute top-1/4 -left-20 w-80 h-80 rounded-full bg-indigo-600/25 blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-20 w-80 h-80 rounded-full bg-purple-600/25 blur-3xl animate-pulse" />
+      </div>
+
+      {/* Top Format Switch Bar */}
+      <div className="mb-3 flex items-center gap-2 bg-white/10 p-1 rounded-2xl border border-white/10 text-xs">
+        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-xs">
+          <Laptop className="w-3.5 h-3.5" />
+          <span>Live Online Courses</span>
+        </span>
+
+        <Link
+          href="/apply/offline"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-colors font-medium"
+        >
+          <Building2 className="w-3.5 h-3.5 text-sky-400" />
+          <span>Switch to Indore Classroom Form &rarr;</span>
+        </Link>
+      </div>
+
+      {/* Centered Form */}
+      <div className="w-full max-w-lg my-auto py-2">
+        <Suspense fallback={<div className="p-8 text-center text-white/50 text-sm">Loading Live Online Form...</div>}>
+          <OnlineLeadForm initialSource="Live Online Admissions" />
+        </Suspense>
+      </div>
+
+      <div className="py-2 text-center text-[11px] text-white/40 font-medium">
+        <span>ILI Live Online Academy &bull; Interactive Video &bull; Pan-India & Global</span>
+      </div>
+    </div>
+  );
+}

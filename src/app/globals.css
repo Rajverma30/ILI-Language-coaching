@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #FAF8F5;
+    --foreground: #0F1D38;
+    --card: #FFFFFF;
+    --card-foreground: #0F1D38;
+    --popover: #FFFFFF;
+    --popover-foreground: #0F1D38;
+    --primary: #0F1D38;
+    --primary-foreground: #FAF8F5;
+    --secondary: #801D30;
+    --secondary-foreground: #FAF8F5;
+    --muted: #F3EFE6;
+    --muted-foreground: #5C6479;
+    --accent: #C5A059;
+    --accent-foreground: #0F1D38;
+    --border: #E8E2D8;
+    --input: #E8E2D8;
+    --ring: #0F1D38;
+  }
+}
+
+@theme {
+  --color-ivory: #FAF8F5;
+  --color-ivory-light: #FDFBF7;
+  --color-ivory-dark: #F3EFE6;
+  --color-navy: #0F1D38;
+  --color-navy-dark: #091224;
+  --color-navy-light: #1A2E56;
+  --color-burgundy: #801D30;
+  --color-burgundy-dark: #631423;
+  --color-burgundy-light: #9B283E;
+  --color-gold: #C5A059;
+  --color-gold-light: #E0C17E;
+  --color-gold-dark: #A5823D;
+  --color-sand: #E8E2D8;
+  --color-sand-light: #F3EFE6;
+  --color-charcoal: #1E293B;
+  --color-slate-muted: #5C6479;
+  --font-serif: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: #FAF8F5;
+  color: #0F1D38;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom editorial serif utility */
+.font-editorial {
+  font-family: var(--font-serif);
+  letter-spacing: -0.015em;
+}
+
+/* Glassmorphism & premium card accents */
+.card-premium {
+  background: #FFFFFF;
+  border: 1px solid #E8E2D8;
+  box-shadow: 0 4px 20px -2px rgba(15, 29, 56, 0.05);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-premium:hover {
+  box-shadow: 0 12px 30px -4px rgba(15, 29, 56, 0.1);
+  border-color: #D6CDC0;
+}
+
+.badge-gold {
+  background-color: #FAF4E6;
+  color: #8C6D23;
+  border: 1px solid #E6D7B3;
+}
+
+.badge-burgundy {
+  background-color: #FBF0F2;
+  color: #801D30;
+  border: 1px solid #F3CFD6;
+}
+
+.badge-navy {
+  background-color: #EEF2F8;
+  color: #0F1D38;
+  border: 1px solid #D2DCED;
+}
+

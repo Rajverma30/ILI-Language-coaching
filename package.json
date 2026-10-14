@@ -1,0 +1,25 @@
+{
+  "name": "ili-languages-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ILI Foreign Languages Institute — Modern Multi-Application Platform",
+  "workspaces": [
+    "customer-frontend",
+    "admin-frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:customer": "npm --prefix customer-frontend run dev",
+    "dev:admin": "npm --prefix admin-frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build:customer": "npm --prefix customer-frontend run build",
+    "build:admin": "npm --prefix admin-frontend run build",
+    "build:backend": "npm --prefix backend run build",
+    "build:all": "npm run build:backend && npm run build:customer && npm run build:admin",
+    "typecheck:customer": "npm --prefix customer-frontend run typecheck",
+    "typecheck:admin": "npm --prefix admin-frontend run typecheck",
+    "typecheck:backend": "npm --prefix backend run typecheck",
+    "typecheck:all": "npm run typecheck:backend && npm run typecheck:customer && npm run typecheck:admin",
+    "install:all": "npm --prefix backend install && npm --prefix customer-frontend install && npm --prefix admin-frontend install"
+  }
+}

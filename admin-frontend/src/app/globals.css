@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #0F172A;
+    --card: #FFFFFF;
+    --card-foreground: #0F172A;
+    --popover: #FFFFFF;
+    --popover-foreground: #0F172A;
+    --primary: #00AFF5;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F0F9FF;
+    --secondary-foreground: #0284C7;
+    --muted: #F8FAFC;
+    --muted-foreground: #64748B;
+    --accent: #E0F2FE;
+    --accent-foreground: #0284C7;
+    --border: #E2E8F0;
+    --input: #E2E8F0;
+    --ring: #00AFF5;
+  }
+}
+
+@theme {
+  --color-ivory: #FFFFFF;
+  --color-ivory-light: #FFFFFF;
+  --color-ivory-dark: #F8FAFC;
+  --color-navy: #0F172A;
+  --color-navy-dark: #020617;
+  --color-navy-light: #1E293B;
+  --color-burgundy: #00AFF5;
+  --color-burgundy-dark: #0096D6;
+  --color-burgundy-light: #38BDF8;
+  --color-gold: #00AFF5;
+  --color-gold-light: #7DD3FC;
+  --color-gold-dark: #0284C7;
+  --color-sand: #E2E8F0;
+  --color-sand-light: #F1F5F9;
+  --color-charcoal: #0F172A;
+  --color-slate-muted: #64748B;
+  --color-sky-500: #00AFF5;
+  --color-sky-600: #0096D6;
+  --color-sky-700: #0284C7;
+  --color-purple-50: #F0F9FF;
+  --color-purple-100: #E0F2FE;
+  --color-purple-200: #BAE6FD;
+  --color-purple-300: #7DD3FC;
+  --color-purple-400: #38BDF8;
+  --color-purple-500: #00AFF5;
+  --color-purple-600: #0096D6;
+  --color-purple-700: #0284C7;
+  --color-purple-800: #075985;
+  --color-purple-900: #0C4A6E;
+  --font-serif: 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #0F172A;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern bold headline utility replacing old serif */
+.font-editorial {
+  font-family: var(--font-sans);
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+/* Crisp modern card styling */
+.card-premium {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 20px -2px rgba(0, 175, 245, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-premium:hover {
+  box-shadow: 0 12px 30px -4px rgba(0, 175, 245, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+  border-color: #BAE6FD;
+}
+
+/* Modern sky blue badge accents */
+.badge-gold {
+  background-color: #F0F9FF;
+  color: #0284C7;
+  border: 1px solid #BAE6FD;
+}
+
+.badge-burgundy {
+  background-color: #F0F9FF;
+  color: #0096D6;
+  border: 1px solid #BAE6FD;
+}
+
+.badge-navy {
+  background-color: #F8FAFC;
+  color: #0F172A;
+  border: 1px solid #E2E8F0;
+}
