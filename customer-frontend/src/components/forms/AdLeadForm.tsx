@@ -496,15 +496,12 @@ export const AdLeadForm: React.FC<AdLeadFormProps> = ({
           <div className="space-y-1">
             <label
               htmlFor="lead-full-name"
-              className="flex items-center justify-between text-xs font-bold text-slate-800"
+              className="flex items-center text-xs font-bold text-slate-800"
             >
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5 text-sky-600" />
                 <span>Full Name</span>
                 <span className="text-red-500">*</span>
-              </span>
-              <span className="text-[10px] font-normal text-slate-400">
-                Click for system auto-fill
               </span>
             </label>
             <input

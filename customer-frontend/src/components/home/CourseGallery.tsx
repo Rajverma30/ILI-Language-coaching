@@ -15,8 +15,102 @@ import {
   BookOpen,
   Clock,
   Compass,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { CourseUnlockModal } from "@/components/forms/CourseUnlockModal";
+
+interface CourseRowSectionProps {
+  title: string;
+  subtitle: string;
+  badgeText: string;
+  badgeIcon: React.ReactNode;
+  badgeColorClass: string;
+  courses: Course[];
+  categoryBadge: string;
+  renderCard: (c: Course, categoryBadge?: string) => React.ReactNode;
+  onViewAll: () => void;
+}
+
+const CourseRowSection: React.FC<CourseRowSectionProps> = ({
+  title,
+  subtitle,
+  badgeText,
+  badgeIcon,
+  badgeColorClass,
+  courses,
+  categoryBadge,
+  renderCard,
+  onViewAll,
+}) => {
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = 370;
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-white/10 pb-4">
+        <div className="space-y-1">
+          <div className={`flex items-center gap-2 ${badgeColorClass}`}>
+            {badgeIcon}
+            <span className="text-xs font-black uppercase tracking-wider">{badgeText}</span>
+          </div>
+          <h3 className="text-2xl font-black text-white tracking-tight">{title}</h3>
+          <p className="text-xs text-slate-400">{subtitle}</p>
+        </div>
+
+        {/* Small "View All" Button + Navigation Arrows */}
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <button
+            type="button"
+            onClick={onViewAll}
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-xs font-bold text-sky-400 hover:text-sky-300 transition-colors cursor-pointer"
+          >
+            <span>View All</span>
+            <ArrowRight className="w-3 h-3" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+            className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+            className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer shadow-xs active:scale-95"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Horizontally sliding container on both mobile and laptop/desktop */}
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {courses.map((c) => (
+          <div key={c.id} className="w-[300px] sm:w-[360px] shrink-0 snap-start">
+            {renderCard(c, categoryBadge)}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export const CourseGallery: React.FC = () => {
   const router = useRouter();
@@ -81,7 +175,7 @@ export const CourseGallery: React.FC = () => {
     <div
       key={c.id}
       onClick={(e) => handleCourseClick(e, c)}
-      className="bg-white/5 hover:bg-white/[0.09] backdrop-blur-xl border border-white/10 hover:border-sky-400 rounded-3xl p-5 transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/15 flex flex-col justify-between group cursor-pointer transform hover:-translate-y-1.5 select-none"
+      className="bg-white/5 hover:bg-white/[0.09] backdrop-blur-xl border border-white/10 hover:border-sky-400 rounded-3xl p-5 transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/15 flex flex-col justify-between group cursor-pointer transform hover:-translate-y-1.5 select-none h-full"
     >
       <div className="space-y-4">
         {/* Full Clickable Image Banner */}
@@ -228,115 +322,68 @@ export const CourseGallery: React.FC = () => {
         </div>
 
         {activeFilter !== "All" ? (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div>
-                <h3 className="text-2xl font-black text-white tracking-tight">
-                  {activeFilter} Language Courses ({filteredTabCourses.length})
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Showing all active batches, syllabus and preview lectures for {activeFilter}.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setActiveFilter("All")}
-                className="text-xs font-bold text-sky-400 hover:text-sky-300 hover:underline cursor-pointer"
-              >
-                &larr; View All Showcases
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredTabCourses.map((c) => renderCourseCard(c, activeFilter))}
-            </div>
-          </div>
+          <CourseRowSection
+            title={`${activeFilter} Language Courses (${filteredTabCourses.length})`}
+            subtitle={`Showing all active batches, syllabus and preview lectures for ${activeFilter}.`}
+            badgeText={`${activeFilter} Programs`}
+            badgeIcon={<Compass className="w-5 h-5 text-sky-400" />}
+            badgeColorClass="text-sky-400"
+            courses={filteredTabCourses}
+            categoryBadge={activeFilter}
+            renderCard={renderCourseCard}
+            onViewAll={() => router.push("/courses")}
+          />
         ) : (
           <>
             {/* SHOWCASE 1: MOST FAMOUS & POPULAR COURSES */}
-            <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-white/10 pb-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-amber-400">
-                    <Flame className="w-5 h-5 fill-amber-400" />
-                    <span className="text-xs font-black uppercase tracking-wider">Most In-Demand Programs</span>
-                  </div>
-                  <h3 className="text-2xl font-black text-white tracking-tight">
-                    Most Famous & Top-Rated Batches
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    Foundational A1 batches & Executive English with highest enrollment in Indore & Central India.
-                  </p>
-                </div>
-                <span className="text-xs text-slate-500 font-semibold hidden sm:inline">
-                  Instant Syllabus Access
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {famousCourses.map((c) => renderCourseCard(c, "Famous"))}
-              </div>
-            </div>
+            <CourseRowSection
+              title="Most Famous & Top-Rated Batches"
+              subtitle="Foundational A1 batches & Executive English with highest enrollment in Indore & Central India."
+              badgeText="Most In-Demand Programs"
+              badgeIcon={<Flame className="w-5 h-5 fill-amber-400" />}
+              badgeColorClass="text-amber-400"
+              courses={famousCourses}
+              categoryBadge="Famous"
+              renderCard={renderCourseCard}
+              onViewAll={() => router.push("/courses")}
+            />
 
             {/* SHOWCASE 2: NEW RELEASES & ADVANCED PROGRAMS */}
-            <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-white/10 pb-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-purple-400">
-                    <Sparkles className="w-5 h-5" />
-                    <span className="text-xs font-black uppercase tracking-wider">Newly Introduced Curricula</span>
-                  </div>
-                  <h3 className="text-2xl font-black text-white tracking-tight">
-                    New Releases & Advanced Curricula
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    JLPT N5 Japanese, Goethe B1 exam specialization & Exclusive English Fluency.
-                  </p>
-                </div>
-                <span className="text-xs text-slate-500 font-semibold hidden sm:inline">
-                  New Batches Open
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {newReleaseCourses.map((c) => renderCourseCard(c, "New Release"))}
-              </div>
-            </div>
+            <CourseRowSection
+              title="New Releases & Advanced Curricula"
+              subtitle="JLPT N5 Japanese, Goethe B1 exam specialization & Exclusive English Fluency."
+              badgeText="Newly Introduced Curricula"
+              badgeIcon={<Sparkles className="w-5 h-5 text-purple-400" />}
+              badgeColorClass="text-purple-400"
+              courses={newReleaseCourses}
+              categoryBadge="New Release"
+              renderCard={renderCourseCard}
+              onViewAll={() => router.push("/courses")}
+            />
 
             {/* SHOWCASE 3: CAREER & EUROPEAN VISA PROGRAMS */}
-            <div className="space-y-6">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-white/10 pb-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-emerald-400">
-                    <TrendingUp className="w-5 h-5" />
-                    <span className="text-xs font-black uppercase tracking-wider">Jobseeker & Higher Education</span>
-                  </div>
-                  <h3 className="text-2xl font-black text-white tracking-tight">
-                    Career Growth & European Visa Programs
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    Targeted preparation for Germany Opportunity Card, Blue Card, Canada PR, IELTS & MNC jobs.
-                  </p>
-                </div>
-                <span className="text-xs text-slate-500 font-semibold hidden sm:inline">
-                  Visa Aligned
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {careerCourses.map((c) => renderCourseCard(c, "Career Visa"))}
-              </div>
-            </div>
+            <CourseRowSection
+              title="Career Growth & European Visa Programs"
+              subtitle="Targeted preparation for Germany Opportunity Card, Blue Card, Canada PR, IELTS & MNC jobs."
+              badgeText="Jobseeker & Higher Education"
+              badgeIcon={<TrendingUp className="w-5 h-5 text-emerald-400" />}
+              badgeColorClass="text-emerald-400"
+              courses={careerCourses}
+              categoryBadge="Career Visa"
+              renderCard={renderCourseCard}
+              onViewAll={() => router.push("/courses")}
+            />
           </>
         )}
 
-        {/* Global View More Courses Button */}
+        {/* Global All Courses Button */}
         <div className="pt-6 text-center">
           <button
             type="button"
             onClick={() => router.push("/courses")}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm shadow-xl shadow-sky-600/25 transition-all cursor-pointer transform hover:-translate-y-0.5"
           >
-            <span>View More Courses</span>
+            <span>All Courses</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

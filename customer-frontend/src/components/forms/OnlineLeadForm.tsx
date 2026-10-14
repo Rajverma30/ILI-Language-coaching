@@ -361,15 +361,12 @@ export const OnlineLeadForm: React.FC<OnlineLeadFormProps> = ({
           <div className="space-y-1">
             <label
               htmlFor="online-lead-name"
-              className="flex items-center justify-between text-xs font-bold text-slate-800"
+              className="flex items-center text-xs font-bold text-slate-800"
             >
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5 text-indigo-600" />
                 <span>Full Name</span>
                 <span className="text-red-500">*</span>
-              </span>
-              <span className="text-[10px] font-normal text-slate-400">
-                System auto-fill
               </span>
             </label>
             <input
@@ -389,15 +386,12 @@ export const OnlineLeadForm: React.FC<OnlineLeadFormProps> = ({
           <div className="space-y-1">
             <label
               htmlFor="online-lead-phone"
-              className="flex items-center justify-between text-xs font-bold text-slate-800"
+              className="flex items-center text-xs font-bold text-slate-800"
             >
               <span className="flex items-center gap-1.5">
                 <Phone className="w-3.5 h-3.5 text-emerald-600" />
                 <span>WhatsApp Mobile Number</span>
                 <span className="text-red-500">*</span>
-              </span>
-              <span className="text-[10px] font-normal text-slate-400">
-                10-digit number
               </span>
             </label>
             <div className="relative flex">

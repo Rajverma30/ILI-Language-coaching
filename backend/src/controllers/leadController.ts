@@ -10,7 +10,7 @@ export class LeadController {
     sendSuccess(res, leads);
   }
 
-  static createLead(req: Request, res: Response): void {
+  static async createLead(req: Request, res: Response): Promise<void> {
     const { fullName, email, phone, courseInterest, preferredSlot, preferredContactMethod, message, source } = req.body;
 
     if (!fullName || !phone) {
@@ -34,12 +34,12 @@ export class LeadController {
       source: source || "Website Form",
     });
 
-    // 🚀 Instant WhatsApp Automation (Lead Welcome + Admin Alert dispatched in < 1 second, deduplicated)
-    setImmediate(() => {
-      UltraMsgService.processLeadNotification(newLead).catch((err) =>
-        console.error("[UltraMsg] Error processing lead notifications:", err)
-      );
-    });
+    // 🚀 Instant WhatsApp Automation (Lead Welcome + Admin Alert dispatched in parallel, awaited before response)
+    try {
+      await UltraMsgService.processLeadNotification(newLead);
+    } catch (err) {
+      console.error("[UltraMsg] Error processing lead notifications:", err);
+    }
 
     sendSuccess(res, newLead, 201);
   }

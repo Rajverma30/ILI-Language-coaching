@@ -29,7 +29,7 @@ export const AdmissionsCta: React.FC = () => {
             href="/courses"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm bg-sky-600 hover:bg-sky-500 text-white shadow-lg shadow-sky-600/30 transition-all"
           >
-            <span>View More Courses</span>
+            <span>All Courses</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
 

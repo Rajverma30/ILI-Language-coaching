@@ -155,11 +155,11 @@ export class UltraMsgService {
     }
     this.recentLeadsMap.set(dedupKey, now);
 
-    // 1. Send Welcome message to the Lead (Student)
-    await this.sendLeadWelcomeMessage(lead);
-
-    // 2. Send Alert message to the Admin
-    await this.sendAdminLeadAlert(lead);
+    // 1 & 2. Send Welcome message to the Lead (Student) and Alert message to Admin in parallel
+    await Promise.allSettled([
+      this.sendLeadWelcomeMessage(lead),
+      this.sendAdminLeadAlert(lead),
+    ]);
   }
 
   /**

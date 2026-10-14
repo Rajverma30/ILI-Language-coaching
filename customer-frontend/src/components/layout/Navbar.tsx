@@ -96,22 +96,23 @@ export const Navbar: React.FC = () => {
             </kbd>
           </button>
 
-          {/* Right Action Buttons - Your Account Only */}
+          {/* Right Action Buttons - Login & Signup OR Profile Icon */}
           <div className="hidden sm:flex items-center gap-3">
             {currentUser && currentUser.role === "student" ? (
               <div className="flex items-center gap-2">
                 <Link
                   href="/student"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-xs"
+                  title={currentUser?.name ? `Signed in as ${currentUser.name}` : "Your Profile"}
+                  className="w-9 h-9 rounded-full bg-sky-600 hover:bg-sky-700 text-white flex items-center justify-center shadow-xs transition-transform hover:scale-105"
+                  aria-label="Your Profile"
                 >
-                  <GraduationCap className="w-4 h-4 text-sky-200" />
-                  <span>Your Account</span>
+                  <User className="w-5 h-5 text-white" />
                 </Link>
 
                 <button
                   onClick={logout}
                   title="Sign Out"
-                  className="p-2 text-slate-500 hover:text-red-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                  className="p-2 text-slate-400 hover:text-red-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
                   aria-label="Sign Out"
                 >
                   <LogOut className="w-4 h-4" />
@@ -124,7 +125,7 @@ export const Navbar: React.FC = () => {
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-xs"
                 >
                   <User className="w-4 h-4 text-sky-200" />
-                  <span>Your Account</span>
+                  <span>Login & Signup</span>
                 </Link>
               </div>
             )}
@@ -173,16 +174,17 @@ export const Navbar: React.FC = () => {
                 <Link
                   href="/student"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center block px-4 py-2.5 rounded-lg text-xs font-bold bg-sky-600 text-white"
+                  className="w-full text-center flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold bg-sky-600 text-white"
                 >
-                  Your Account ({currentUser.name})
+                  <User className="w-4 h-4" />
+                  <span>Profile ({currentUser.name})</span>
                 </Link>
                 <button
                   onClick={() => {
                     logout();
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full text-center py-2 text-xs font-medium text-red-600"
+                  className="w-full text-center py-2 text-xs font-medium text-red-600 cursor-pointer"
                 >
                   Sign Out
                 </button>
@@ -194,7 +196,7 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block text-center px-4 py-2.5 rounded-lg text-xs font-bold bg-sky-600 text-white"
                 >
-                  Your Account / Login
+                  Login & Signup
                 </Link>
               </div>
             )}

@@ -250,9 +250,8 @@ export default function CourseDetailPage({
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-              </div>
 
-              <div className="space-y-4">
+                <div className="space-y-4">
                 {course.sections.map((section, idx) => {
                   const isExpanded = expandedSectionIds[section.id] ?? false;
                   return (
@@ -597,6 +596,7 @@ export default function CourseDetailPage({
           </div>
         </div>
       </div>
+    </div>
 
       {/* Official Course Purchase & Enrollment Modal */}
       {enrollModalOpen && (
