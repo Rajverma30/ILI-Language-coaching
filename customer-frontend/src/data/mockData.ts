@@ -53,6 +53,8 @@ export const initialCourses: Course[] = [
     featured: true,
     status: "Active",
     enrolledStudentsCount: 42,
+    visitorCount: 1248,
+    views: 1248,
     sections: [
       {
         id: "sec-ger-1",
@@ -223,6 +225,8 @@ export const initialCourses: Course[] = [
     featured: false,
     status: "Active",
     enrolledStudentsCount: 28,
+    visitorCount: 890,
+    views: 890,
     sections: [
       {
         id: "sec-ger-b1-1",
@@ -276,6 +280,8 @@ export const initialCourses: Course[] = [
     featured: true,
     status: "Active",
     enrolledStudentsCount: 35,
+    visitorCount: 1054,
+    views: 1054,
     sections: [
       {
         id: "sec-fre-1",
@@ -331,6 +337,8 @@ export const initialCourses: Course[] = [
     featured: true,
     status: "Active",
     enrolledStudentsCount: 31,
+    visitorCount: 940,
+    views: 940,
     sections: [
       {
         id: "sec-spa-1",
@@ -385,6 +393,8 @@ export const initialCourses: Course[] = [
     featured: true,
     status: "Active",
     enrolledStudentsCount: 56,
+    visitorCount: 1680,
+    views: 1680,
     sections: [
       {
         id: "sec-eng-1",
@@ -439,6 +449,8 @@ export const initialCourses: Course[] = [
     featured: false,
     status: "Active",
     enrolledStudentsCount: 19,
+    visitorCount: 620,
+    views: 620,
     sections: [
       {
         id: "sec-jpn-1",

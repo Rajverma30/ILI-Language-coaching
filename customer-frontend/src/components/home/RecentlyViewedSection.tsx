@@ -32,15 +32,22 @@ export const RecentlyViewedSection: React.FC = () => {
   if (recentCourses.length === 0) return null;
 
   const handleCourseClick = (e: React.MouseEvent, course: Course) => {
+    // Clean up stale blanket bypass flags
     if (typeof window !== "undefined") {
       localStorage.removeItem("ili_visitor_verified");
+      sessionStorage.removeItem("ili_lead_unlocked");
     }
 
-    const isVerified =
-      Boolean(currentUser) ||
-      (typeof window !== "undefined" && Boolean(sessionStorage.getItem("ili_lead_unlocked")));
+    let isUnlocked = Boolean(currentUser);
+    if (!isUnlocked && typeof window !== "undefined") {
+      try {
+        const raw = sessionStorage.getItem("ili_unlocked_courses");
+        const list: string[] = raw ? JSON.parse(raw) : [];
+        isUnlocked = list.includes(course.slug);
+      } catch {}
+    }
 
-    if (!isVerified) {
+    if (!isUnlocked) {
       e.preventDefault();
       setSelectedCourseForUnlock(course);
     }

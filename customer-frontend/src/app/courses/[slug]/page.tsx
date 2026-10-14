@@ -64,12 +64,22 @@ export default function CourseDetailPage({
       setIsAccessUnlocked(true);
       return;
     }
-    // Clean up any stale persistent localStorage flag
+    // Clean up any stale persistent flags
     localStorage.removeItem("ili_visitor_verified");
-    // Check if user has unlocked in the current browser session
-    const sessionUnlocked = sessionStorage.getItem("ili_lead_unlocked") === "true";
-    setIsAccessUnlocked(sessionUnlocked);
-  }, [currentUser]);
+    sessionStorage.removeItem("ili_lead_unlocked");
+
+    // Check if user has unlocked this specific course in the current browser session
+    try {
+      const raw = sessionStorage.getItem("ili_unlocked_courses");
+      const list: string[] = raw ? JSON.parse(raw) : [];
+      if (course && list.includes(course.slug)) {
+        setIsAccessUnlocked(true);
+        return;
+      }
+    } catch {}
+
+    setIsAccessUnlocked(false);
+  }, [currentUser, course]);
 
   // Ensure all course sections for any course (including newly added courses) are expanded by default
   useEffect(() => {

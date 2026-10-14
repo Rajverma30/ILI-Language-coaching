@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import { useDemo } from "@/context/DemoContext";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -23,6 +24,7 @@ import {
 } from "lucide-react";
 
 export default function CoursesCataloguePage() {
+  const router = useRouter();
   const { courses, currentUser } = useDemo();
 
   const [search, setSearch] = useState("");
@@ -32,18 +34,28 @@ export default function CoursesCataloguePage() {
   const [selectedCourseForUnlock, setSelectedCourseForUnlock] = useState<Course | null>(null);
 
   const handleCourseClick = (e: React.MouseEvent, course: Course) => {
-    // Clean up stale localStorage flag
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Clean up stale blanket bypass flags
     if (typeof window !== "undefined") {
       localStorage.removeItem("ili_visitor_verified");
+      sessionStorage.removeItem("ili_lead_unlocked");
     }
 
-    const isVerified =
-      Boolean(currentUser) ||
-      (typeof window !== "undefined" && Boolean(sessionStorage.getItem("ili_lead_unlocked")));
+    let isUnlocked = Boolean(currentUser);
+    if (!isUnlocked && typeof window !== "undefined") {
+      try {
+        const raw = sessionStorage.getItem("ili_unlocked_courses");
+        const list: string[] = raw ? JSON.parse(raw) : [];
+        isUnlocked = list.includes(course.slug);
+      } catch {}
+    }
 
-    if (!isVerified) {
-      e.preventDefault();
+    if (!isUnlocked) {
       setSelectedCourseForUnlock(course);
+    } else {
+      router.push(`/courses/${course.slug}`);
     }
   };
 
@@ -224,7 +236,8 @@ export default function CoursesCataloguePage() {
             {filteredCourses.map((course) => (
               <div
                 key={course.id}
-                className="bg-white rounded-xl border border-slate-200 hover:border-sky-200 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group"
+                onClick={(e) => handleCourseClick(e, course)}
+                className="bg-white rounded-xl border border-slate-200 hover:border-sky-300 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer"
               >
                 {/* Standardized Card Image Header */}
                 <div className="relative aspect-16/10 w-full bg-slate-100 overflow-hidden">
@@ -308,14 +321,14 @@ export default function CoursesCataloguePage() {
                         </div>
                       </div>
 
-                      <Link
-                        href={`/courses/${course.slug}`}
+                      <button
+                        type="button"
                         onClick={(e) => handleCourseClick(e, course)}
                         className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-2xs cursor-pointer"
                       >
                         <span>Explore Course</span>
                         <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>

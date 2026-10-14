@@ -99,9 +99,20 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
     try {
       addLead(leadPayload);
 
-      // Save unlocked credentials to sessionStorage for current session
+      // Save unlocked credentials and unlock this specific course for the current session
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("ili_lead_unlocked", "true");
+        try {
+          const raw = sessionStorage.getItem("ili_unlocked_courses");
+          const list: string[] = raw ? JSON.parse(raw) : [];
+          if (!list.includes(course.slug)) {
+            list.push(course.slug);
+            sessionStorage.setItem("ili_unlocked_courses", JSON.stringify(list));
+          }
+        } catch {
+          sessionStorage.setItem("ili_unlocked_courses", JSON.stringify([course.slug]));
+        }
+        sessionStorage.removeItem("ili_lead_unlocked");
+        localStorage.removeItem("ili_visitor_verified");
         sessionStorage.setItem(
           "ili_lead_data",
           JSON.stringify({
@@ -110,7 +121,6 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
             unlockedAt: new Date().toISOString(),
           })
         );
-        localStorage.removeItem("ili_visitor_verified");
       }
 
       onUnlocked?.();

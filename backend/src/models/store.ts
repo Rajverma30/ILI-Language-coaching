@@ -136,6 +136,8 @@ class DataStore {
       id: courseId,
       totalLectures,
       enrolledStudentsCount: (courseData as any).enrolledStudentsCount || 0,
+      visitorCount: (courseData as any).visitorCount || 0,
+      views: (courseData as any).views || 0,
       sections: rawSections,
     };
 

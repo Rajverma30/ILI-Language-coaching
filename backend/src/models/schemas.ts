@@ -82,6 +82,8 @@ const CourseMongoSchema = new Schema<CourseType>(
       default: "Active",
     },
     enrolledStudentsCount: { type: Number, default: 0 },
+    visitorCount: { type: Number, default: 0 },
+    views: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

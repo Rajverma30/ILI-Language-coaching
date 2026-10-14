@@ -1,5 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Sparkles,
   ArrowRight,
@@ -11,8 +14,37 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SmartCourseSearch } from "@/components/search/SmartCourseSearch";
+import { CourseUnlockModal } from "@/components/forms/CourseUnlockModal";
+import { useDemo } from "@/context/DemoContext";
+import { Course } from "@/types";
 
 export const HeroSection: React.FC = () => {
+  const router = useRouter();
+  const { currentUser } = useDemo();
+  const [selectedCourseForUnlock, setSelectedCourseForUnlock] = useState<Course | null>(null);
+
+  const handleSelectSearchCourse = (course: Course) => {
+    // Clean up stale blanket bypass flags
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("ili_visitor_verified");
+      sessionStorage.removeItem("ili_lead_unlocked");
+    }
+
+    let isUnlocked = Boolean(currentUser);
+    if (!isUnlocked && typeof window !== "undefined") {
+      try {
+        const raw = sessionStorage.getItem("ili_unlocked_courses");
+        const list: string[] = raw ? JSON.parse(raw) : [];
+        isUnlocked = list.includes(course.slug);
+      } catch {}
+    }
+
+    if (!isUnlocked) {
+      setSelectedCourseForUnlock(course);
+    } else {
+      router.push(`/courses/${course.slug}`);
+    }
+  };
   return (
     <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28 border-b border-slate-200 bg-white">
       {/* Decorative Warm Ambient Background Elements */}
@@ -43,7 +75,7 @@ export const HeroSection: React.FC = () => {
                 <Sparkles className="w-3.5 h-3.5 text-sky-600" />
                 <span>Instant Course & Syllabus Search (Typo-Tolerant):</span>
               </div>
-              <SmartCourseSearch />
+              <SmartCourseSearch onSelectCourse={handleSelectSearchCourse} />
             </div>
 
             {/* Key Value Badges */}
@@ -177,6 +209,13 @@ export const HeroSection: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Search Unlock Modal Gate for Non-Logged-in Visitors */}
+      <CourseUnlockModal
+        course={selectedCourseForUnlock}
+        isOpen={Boolean(selectedCourseForUnlock)}
+        onUnlocked={() => setSelectedCourseForUnlock(null)}
+        onClose={() => setSelectedCourseForUnlock(null)}
+      />
     </section>
   );
 };

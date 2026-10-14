@@ -67,6 +67,8 @@ export interface Course {
   featured?: boolean;
   status: "Active" | "Draft" | "Archived";
   enrolledStudentsCount: number;
+  visitorCount?: number;
+  views?: number;
 }
 
 export interface LectureProgress {
