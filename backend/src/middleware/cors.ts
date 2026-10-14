@@ -6,12 +6,18 @@ export const corsMiddleware = cors({
     // Allow requests with no origin (such as mobile apps, curl, or same-origin server requests)
     if (!origin) return callback(null, true);
 
-    if (config.corsOrigins.includes(origin)) {
+    // Allow configured origins or wildcard
+    if (config.corsOrigins.includes("*") || config.corsOrigins.includes(origin)) {
       return callback(null, true);
     }
 
-    // In development mode, allow localhost origins
-    if (config.nodeEnv === "development" && origin.startsWith("http://localhost:")) {
+    // Allow all vercel.app domains (production & preview branch deployments)
+    if (origin.endsWith(".vercel.app")) {
+      return callback(null, true);
+    }
+
+    // Allow localhost origins for development
+    if (origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:")) {
       return callback(null, true);
     }
 

@@ -56,8 +56,8 @@ export async function connectMongo(): Promise<typeof mongoose | null> {
     console.error("❌ MongoDB Atlas Connection Error:", err.message);
     isConnected = false;
 
-    // Retry connection automatically every 10 seconds so when user whitelists IP, it connects instantly
-    if (!retryTimeout) {
+    // Retry connection automatically in background (only when running as standalone server, not in serverless)
+    if (!process.env.VERCEL && !retryTimeout) {
       retryTimeout = setTimeout(() => {
         retryTimeout = null;
         connectMongo();

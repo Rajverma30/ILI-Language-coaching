@@ -9,6 +9,8 @@
     "backend"
   ],
   "scripts": {
+    "dev": "concurrently -n \"backend,customer,admin\" -c \"blue,green,magenta\" \"npm run dev:backend\" \"npm run dev:customer\" \"npm run dev:admin\"",
+    "dev:frontends": "concurrently -n \"customer,admin\" -c \"green,magenta\" \"npm run dev:customer\" \"npm run dev:admin\"",
     "dev:customer": "npm --prefix customer-frontend run dev",
     "dev:admin": "npm --prefix admin-frontend run dev",
     "dev:backend": "npm --prefix backend run dev",
@@ -21,5 +23,8 @@
     "typecheck:backend": "npm --prefix backend run typecheck",
     "typecheck:all": "npm run typecheck:backend && npm run typecheck:customer && npm run typecheck:admin",
     "install:all": "npm --prefix backend install && npm --prefix customer-frontend install && npm --prefix admin-frontend install"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
   }
 }
