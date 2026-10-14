@@ -17,6 +17,25 @@ router.use("/orders", orderRoutes);
 router.use("/settings", settingsRoutes);
 router.use("/integrations", integrationRoutes);
 
+// API Root Index
+router.get("/", (_req, res) => {
+  res.json({
+    status: "ok",
+    service: "ILI Languages Centralized Backend API",
+    campus: "Apollo Tower, New Palasia, Indore, India",
+    endpoints: {
+      health: "/api/health",
+      courses: "/api/courses",
+      students: "/api/students",
+      leads: "/api/leads",
+      orders: "/api/orders",
+      settings: "/api/settings",
+      integrations: "/api/integrations",
+    },
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Health check endpoint
 router.get("/health", (_req, res) => {
   res.json({
