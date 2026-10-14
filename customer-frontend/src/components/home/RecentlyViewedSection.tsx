@@ -113,11 +113,12 @@ export const RecentlyViewedSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Unclosable Course Access Modal */}
+      {/* Course Access Modal */}
       <CourseUnlockModal
         course={selectedCourseForUnlock}
         isOpen={Boolean(selectedCourseForUnlock)}
         onUnlocked={() => setSelectedCourseForUnlock(null)}
+        onClose={() => setSelectedCourseForUnlock(null)}
       />
     </section>
   );

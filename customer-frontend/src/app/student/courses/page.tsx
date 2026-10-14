@@ -24,7 +24,7 @@ export default function StudentCoursesPage() {
       <div className="space-y-3">
         <Breadcrumbs
           items={[
-            { label: "Student Portal", href: "/student" },
+            { label: "Your Account", href: "/student" },
             { label: "My Enrolled Courses" },
           ]}
         />

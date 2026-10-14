@@ -36,17 +36,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
               {/* Brand Link */}
               <div className="flex items-center gap-6">
                 <Link href="/student" className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-sky-600 text-white flex items-center justify-center shadow-xs">
-                    <GraduationCap className="w-5 h-5 text-sky-200" />
-                  </div>
-                  <div>
-                    <span className="font-editorial text-lg font-bold text-slate-900 leading-tight block">
-                      ILI Student LMS
-                    </span>
-                    <span className="text-[10px] text-slate-500 uppercase tracking-wider block">
-                      Apollo Tower, Indore
-                    </span>
-                  </div>
+                  <img src="/logo.png" alt="ILI" className="h-10 w-auto object-contain" />
                 </Link>
 
                 {/* Nav Links */}

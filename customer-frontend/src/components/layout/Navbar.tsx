@@ -52,19 +52,13 @@ export const Navbar: React.FC = () => {
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo & Brand Identity */}
-          <Link href="/" className="flex items-center gap-3.5 group">
-            <div className="w-11 h-11 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-md group-hover:bg-sky-700 transition-colors">
-              <Languages className="w-6 h-6 text-sky-200" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-editorial text-xl font-bold tracking-tight text-slate-900 leading-tight">
-                ILI <span className="text-sky-600">Languages</span>
-              </span>
-              <span className="text-[11px] font-semibold text-slate-500 tracking-wider uppercase">
-                Apollo Tower, Indore
-              </span>
-            </div>
+          {/* Official Logo Brand Identity */}
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
+            <img
+              src="/logo.png"
+              alt="ILI Coaching Institute"
+              className="h-12 sm:h-14 w-auto object-contain transition-transform group-hover:scale-102"
+            />
           </Link>
 
           {/* Desktop Nav Links */}
@@ -87,41 +81,31 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Quick Search Button on Desktop */}
+          {/* Quick Search Button on Desktop - Long & Spacious */}
           <button
             type="button"
             onClick={() => setSearchModalOpen(true)}
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/70 text-slate-500 hover:text-slate-800 text-xs font-semibold border border-slate-200 transition-all cursor-pointer"
+            className="hidden md:flex items-center justify-between w-64 lg:w-80 px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200/80 text-slate-500 hover:text-slate-800 text-xs font-semibold border border-slate-200 transition-all cursor-pointer shadow-2xs"
           >
-            <Search className="w-3.5 h-3.5 text-sky-600" />
-            <span>Search courses...</span>
-            <kbd className="hidden xl:inline-block px-1.5 py-0.5 rounded bg-white text-[10px] text-slate-400 font-mono shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <Search className="w-4 h-4 text-sky-600 shrink-0" />
+              <span>Search courses, languages, levels...</span>
+            </div>
+            <kbd className="hidden lg:inline-block px-2 py-0.5 rounded-lg bg-white text-[10px] text-slate-500 font-mono shadow-2xs border border-slate-200">
               Ctrl K
             </kbd>
           </button>
 
-          {/* Right Action Buttons - Customer Portal Only */}
+          {/* Right Action Buttons - Your Account Only */}
           <div className="hidden sm:flex items-center gap-3">
-            <Button
-              href="/demo"
-              variant="gradient"
-              size="sm"
-              leftIcon={<Sparkles className="w-3.5 h-3.5 text-white" />}
-              rightIcon={
-                <ArrowRight className="w-3.5 h-3.5 text-white transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
-              }
-            >
-              Book Demo Session
-            </Button>
-
             {currentUser && currentUser.role === "student" ? (
-              <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
+              <div className="flex items-center gap-2">
                 <Link
                   href="/student"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-xs"
                 >
-                  <GraduationCap className="w-3.5 h-3.5 text-sky-600" />
-                  <span>Student Portal</span>
+                  <GraduationCap className="w-4 h-4 text-sky-200" />
+                  <span>Your Account</span>
                 </Link>
 
                 <button
@@ -134,13 +118,13 @@ export const Navbar: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2 pl-2 border-l border-slate-200">
+              <div>
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-xs"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-xs"
                 >
-                  <User className="w-3.5 h-3.5 text-sky-200" />
-                  <span>Student Login</span>
+                  <User className="w-4 h-4 text-sky-200" />
+                  <span>Your Account</span>
                 </Link>
               </div>
             )}
@@ -184,20 +168,6 @@ export const Navbar: React.FC = () => {
           </nav>
 
           <div className="pt-3 border-t border-slate-200 flex flex-col gap-2">
-            <Button
-              href="/demo"
-              variant="gradient"
-              size="md"
-              className="w-full"
-              onClick={() => setMobileMenuOpen(false)}
-              leftIcon={<Sparkles className="w-4 h-4 text-white" />}
-              rightIcon={
-                <ArrowRight className="w-4 h-4 text-white transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
-              }
-            >
-              Book Demo Session
-            </Button>
-
             {currentUser && currentUser.role === "student" ? (
               <div className="space-y-2">
                 <Link
@@ -205,7 +175,7 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full text-center block px-4 py-2.5 rounded-lg text-xs font-bold bg-sky-600 text-white"
                 >
-                  Enter Student Portal ({currentUser.name})
+                  Your Account ({currentUser.name})
                 </Link>
                 <button
                   onClick={() => {
@@ -224,7 +194,7 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block text-center px-4 py-2.5 rounded-lg text-xs font-bold bg-sky-600 text-white"
                 >
-                  Student Login
+                  Your Account / Login
                 </Link>
               </div>
             )}

@@ -1,29 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDemo } from "@/context/DemoContext";
 import { Course } from "@/types";
-import {
-  Lock,
-  User,
-  Phone,
-  ArrowRight,
-  ShieldCheck,
-  Sparkles,
-  BookOpen,
-} from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 
 interface CourseUnlockModalProps {
   course: Course | null;
   isOpen: boolean;
   onUnlocked?: () => void;
+  onClose?: () => void;
 }
 
 export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
   course,
   isOpen,
   onUnlocked,
+  onClose,
 }) => {
   const router = useRouter();
   const { addLead } = useDemo();
@@ -33,10 +27,39 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // Dismiss modal on Escape key or Browser Back button
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose?.();
+      }
+    };
+
+    const handlePopState = () => {
+      onClose?.();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen || !course) return null;
 
   const handlePhoneChange = (val: string) => {
     setPhone(val.replace(/[^\d]/g, ""));
+  };
+
+  const handleDismiss = () => {
+    if (onClose) {
+      onClose();
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -87,7 +110,6 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
             unlockedAt: new Date().toISOString(),
           })
         );
-        // Clean up legacy persistent localStorage key so fresh visitors always see lead form
         localStorage.removeItem("ili_visitor_verified");
       }
 
@@ -102,48 +124,41 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
-      style={{ pointerEvents: "auto" }}
-      // Prevent outside click dismissal - UNCLOSABLE
-      onClick={(e) => e.stopPropagation()}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-150 cursor-pointer"
+      onClick={handleDismiss}
     >
       <div
-        className="w-full max-w-md bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 sm:p-8 relative overflow-hidden animate-in zoom-in-95 duration-200"
+        className="w-full max-w-md bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 sm:p-8 relative animate-in zoom-in-95 duration-150 cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Accent Ribbon */}
-        <div className="h-2 w-full absolute top-0 left-0 bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600" />
+        {/* Close Button */}
+        <button
+          type="button"
+          onClick={handleDismiss}
+          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+          aria-label="Close"
+        >
+          <X className="w-5 h-5" />
+        </button>
 
         {/* Modal Header */}
-        <div className="text-center space-y-2 pt-1 pb-4 border-b border-slate-100">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center mx-auto shadow-xs">
-            <Lock className="w-6 h-6" />
-          </div>
-
-          <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-sky-50 text-sky-700 border border-sky-100">
-            <Sparkles className="w-3.5 h-3.5 text-sky-500" />
-            <span>Course Access & Syllabus</span>
-          </div>
-
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-snug">
+        <div className="text-center space-y-2 pt-2 pb-4 border-b border-slate-100">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
             View Course & Syllabus
           </h2>
 
-          <p className="text-xs text-slate-500 max-w-xs mx-auto">
+          <p className="text-xs text-slate-600 max-w-sm mx-auto leading-relaxed">
             Please enter your name & WhatsApp number to view curriculum, sample lectures & tuition fee for:
           </p>
 
           {/* Selected Course Pill */}
-          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-2.5 text-left text-xs">
-            <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shrink-0 text-base shadow-2xs">
-              <BookOpen className="w-4 h-4 text-sky-600" />
-            </div>
-            <div className="min-w-0">
-              <span className="font-bold text-slate-900 block truncate">{course.title}</span>
-              <span className="text-[10px] text-slate-500 font-medium">
-                {course.language} &bull; Level {course.level} &bull; CEFR Certified
-              </span>
-            </div>
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-left">
+            <span className="font-bold text-slate-900 block truncate text-sm">
+              {course.title}
+            </span>
+            <span className="text-[11px] text-slate-500 font-medium">
+              {course.language} &bull; Level {course.level}
+            </span>
           </div>
         </div>
 
@@ -154,20 +169,15 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
           </div>
         )}
 
-        {/* Lead Capture Form */}
-        <form onSubmit={handleSubmit} className="pt-4 space-y-3.5" autoComplete="on">
+        {/* Clean Simple Form */}
+        <form onSubmit={handleSubmit} className="pt-4 space-y-4">
           {/* Full Name */}
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             <label
               htmlFor="unlock-full-name"
-              className="flex items-center justify-between text-xs font-bold text-slate-800"
+              className="block text-xs font-bold text-slate-800"
             >
-              <span className="flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-sky-600" />
-                <span>Your Full Name</span>
-                <span className="text-red-500">*</span>
-              </span>
-              <span className="text-[10px] font-normal text-slate-400">System auto-fill</span>
+              Your Name <span className="text-red-500">*</span>
             </label>
             <input
               id="unlock-full-name"
@@ -178,27 +188,21 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
               placeholder="e.g. Raj Verma"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 text-xs sm:text-sm font-semibold text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 text-sm font-semibold text-slate-900 placeholder:text-slate-400 outline-none transition-all"
             />
           </div>
 
           {/* WhatsApp Mobile Number */}
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             <label
               htmlFor="unlock-mobile-phone"
-              className="flex items-center justify-between text-xs font-bold text-slate-800"
+              className="block text-xs font-bold text-slate-800"
             >
-              <span className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-emerald-600" />
-                <span>WhatsApp Mobile Number</span>
-                <span className="text-red-500">*</span>
-              </span>
-              <span className="text-[10px] font-normal text-slate-400">10-digit number</span>
+              WhatsApp Number <span className="text-red-500">*</span>
             </label>
             <div className="relative flex">
-              <span className="inline-flex items-center gap-1 px-3 rounded-l-xl border border-r-0 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs">
-                <span>🇮🇳</span>
-                <span>+91</span>
+              <span className="inline-flex items-center px-3.5 rounded-l-xl border border-r-0 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs">
+                +91
               </span>
               <input
                 id="unlock-mobile-phone"
@@ -210,19 +214,16 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
                 placeholder="98260 12345"
                 value={phone}
                 onChange={(e) => handlePhoneChange(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-r-xl border border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 text-xs sm:text-sm font-mono font-bold text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+                className="w-full px-3.5 py-2.5 rounded-r-xl border border-slate-200 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/10 text-sm font-mono font-bold text-slate-900 placeholder:text-slate-400 outline-none transition-all"
               />
             </div>
-            <p className="text-[10px] text-slate-400">
-              🔒 Instant syllabus PDF & batch timings will be sent to your WhatsApp.
-            </p>
           </div>
 
-          {/* Submit CTA */}
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3.5 px-6 rounded-2xl font-black text-sm cursor-pointer shadow-xl transition-all transform active:scale-98 flex items-center justify-center gap-2 bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600 hover:from-sky-700 hover:to-purple-700 text-white shadow-indigo-600/25 ${
+            className={`w-full py-3.5 px-6 rounded-2xl font-bold text-sm cursor-pointer shadow-lg transition-all flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white shadow-sky-600/20 ${
               isSubmitting ? "opacity-75 cursor-wait" : ""
             }`}
           >
@@ -235,12 +236,6 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
               </>
             )}
           </button>
-
-          {/* Privacy Trust Bar */}
-          <div className="pt-1 flex items-center justify-center gap-2 text-[10px] text-slate-400">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-            <span>100% Secure & Confidential &bull; Apollo Tower, Indore</span>
-          </div>
         </form>
       </div>
     </div>

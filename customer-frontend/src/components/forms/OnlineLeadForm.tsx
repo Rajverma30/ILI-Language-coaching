@@ -188,7 +188,7 @@ export const OnlineLeadForm: React.FC<OnlineLeadFormProps> = ({
           </div>
           <div className="flex justify-between">
             <span className="text-slate-500">Learning Format:</span>
-            <span className="font-semibold text-slate-800">💻 100% Live Interactive (Pan-India & Global)</span>
+            <span className="font-semibold text-slate-800">100% Live Interactive (Pan-India & Global)</span>
           </div>
         </div>
 
@@ -402,8 +402,7 @@ export const OnlineLeadForm: React.FC<OnlineLeadFormProps> = ({
             </label>
             <div className="relative flex">
               <span className="inline-flex items-center gap-1 px-3 rounded-l-xl border border-r-0 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs">
-                <span>🇮🇳</span>
-                <span>+91</span>
+                <span>IN +91</span>
               </span>
               <input
                 id="online-lead-phone"
@@ -419,7 +418,7 @@ export const OnlineLeadForm: React.FC<OnlineLeadFormProps> = ({
               />
             </div>
             <p className="text-[10px] text-slate-400">
-              🔒 Instant WhatsApp batch details & syllabus will be sent to this number.
+              Instant WhatsApp batch details & syllabus will be sent to this number.
             </p>
           </div>
 

@@ -23,12 +23,14 @@ export const Footer: React.FC = () => {
           {/* Col 1: Institute Brand & Legal */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-md">
-                <Languages className="w-5 h-5 text-sky-200" />
-              </div>
+              <img
+                src="/logo.png"
+                alt="ILI Coaching Institute"
+                className="h-14 w-auto object-contain bg-white/10 p-1.5 rounded-xl border border-white/10"
+              />
               <div>
                 <span className="font-editorial text-xl font-bold text-white tracking-tight">
-                  ILI Foreign Languages Institute
+                  ILI Coaching Institute
                 </span>
                 <span className="block text-[11px] font-medium text-slate-400">
                   {settings.legalName}
@@ -123,13 +125,13 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/demo" className="text-sky-400 hover:text-sky-300 font-medium">
-                  Book Demo Session
+                <Link href="/courses" className="text-sky-400 hover:text-sky-300 font-medium">
+                  View More Courses
                 </Link>
               </li>
               <li>
                 <Link href="/login" className="hover:text-white transition-colors">
-                  Student Portal Login
+                  Your Account
                 </Link>
               </li>
             </ul>

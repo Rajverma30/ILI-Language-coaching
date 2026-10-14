@@ -113,7 +113,7 @@ export default function CoursesCataloguePage() {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold text-slate-800 bg-white border border-slate-200 hover:bg-slate-50 transition-colors shadow-2xs"
               >
                 <GraduationCap className="w-3.5 h-3.5 text-sky-600" />
-                <span>Student Portal</span>
+                <span>Your Account</span>
               </Link>
             </div>
           </div>
@@ -332,11 +332,12 @@ export default function CoursesCataloguePage() {
         </div>
       </section>
 
-      {/* Unclosable Course Unlock Modal Gate for Non-Logged-in Visitors */}
+      {/* Course Access Modal Gate for Non-Logged-in Visitors */}
       <CourseUnlockModal
         course={selectedCourseForUnlock}
         isOpen={Boolean(selectedCourseForUnlock)}
         onUnlocked={() => setSelectedCourseForUnlock(null)}
+        onClose={() => setSelectedCourseForUnlock(null)}
       />
     </PublicLayout>
   );

@@ -49,17 +49,16 @@ export default function StudentLoginPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Brand Identity Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center mb-6">
-        <Link href="/" className="inline-flex items-center gap-2.5 group">
-          <div className="w-10 h-10 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-md group-hover:bg-sky-700 transition-colors">
-            <Languages className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-2xl font-bold text-slate-900">
-            ILI <span className="text-sky-600">Languages</span>
-          </span>
+        <Link href="/" className="inline-flex items-center justify-center group">
+          <img
+            src="/logo.png"
+            alt="ILI - International Language Institute"
+            className="h-16 w-auto object-contain mx-auto"
+          />
         </Link>
         <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-sky-50 text-sky-700 text-xs font-semibold uppercase tracking-wider border border-sky-100">
           <GraduationCap className="w-3.5 h-3.5" />
-          <span>Student Portal</span>
+          <span>Your Account</span>
         </div>
         <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-slate-900">
           Sign in to your learning account
@@ -108,7 +107,7 @@ export default function StudentLoginPage() {
                 className="w-full bg-sky-600 hover:bg-sky-700 text-white"
                 rightIcon={<ArrowRight className="w-4 h-4" />}
               >
-                Sign In to Student Portal
+                Sign In to Your Account
               </Button>
             </div>
           </form>

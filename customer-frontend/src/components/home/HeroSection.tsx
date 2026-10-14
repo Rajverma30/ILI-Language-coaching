@@ -76,17 +76,13 @@ export const HeroSection: React.FC = () => {
 
             {/* CTAs */}
             <div className="pt-4 flex flex-wrap items-center gap-4">
-              <Button
-                href="/demo"
-                variant="gradient"
-                size="lg"
-                leftIcon={<Sparkles className="w-4 h-4 text-white" />}
-                rightIcon={
-                  <ArrowRight className="w-4 h-4 text-white transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
-                }
+              <Link
+                href="/courses"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm bg-sky-600 hover:bg-sky-700 text-white shadow-md shadow-sky-600/25 transition-all"
               >
-                Book Demo Session
-              </Button>
+                <span>View More Courses</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
 
               <Link
                 href="/courses"
@@ -99,7 +95,7 @@ export const HeroSection: React.FC = () => {
 
             {/* Admission batch note */}
             <p className="text-[11px] text-slate-500 font-medium pt-1">
-              ✨ Admissions open for new weekday & weekend batches at Apollo Tower, Indore & Online.
+              Admissions open for new weekday & weekend batches at Apollo Tower, Indore & Online.
             </p>
           </div>
 
@@ -157,13 +153,12 @@ export const HeroSection: React.FC = () => {
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-slate-500 text-[11px]">Demo Fees Pending Institute Confirmation</span>
+                  <span className="text-slate-500 text-[11px]">Apollo Tower Batch Admissions</span>
                   <Link
-                    href="/demo"
+                    href="/courses"
                     className="font-bold text-sky-600 hover:underline flex items-center gap-1"
                   >
-                    <span>Reserve Seat</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>View More &rarr;</span>
                   </Link>
                 </div>
               </div>

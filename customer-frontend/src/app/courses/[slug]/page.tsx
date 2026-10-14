@@ -164,9 +164,8 @@ export default function CourseDetailPage({
 
   return (
     <PublicLayout>
-      {/* Top Breadcrumb & Header */}
-      <div className="bg-white border-b border-slate-200 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <div className="bg-slate-50/40 min-h-screen py-6 sm:py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
           <Breadcrumbs
             items={[
               { label: "Courses", href: "/courses" },
@@ -175,159 +174,82 @@ export default function CourseDetailPage({
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-8 space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="navy">{course.language}</Badge>
-                <Badge variant="gold">{course.level}</Badge>
-                <span className="text-xs font-medium text-slate-500">
-                  Apollo Tower Classroom & Online Dual-Mode
-                </span>
-              </div>
-
-              <h1 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
-                {course.title}
-              </h1>
-
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                {course.shortDescription}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-6 pt-2 text-xs sm:text-sm text-slate-600">
-                <div className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-sky-600" />
-                  <span><strong>{course.durationHours}</strong> Hours Course</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <BookOpen className="w-4 h-4 text-sky-600" />
-                  <span><strong>{course.totalLectures}</strong> Recorded Lessons</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <User className="w-4 h-4 text-sky-600" />
-                  <span>{course.instructorName}</span>
-                </div>
-              </div>
-            </div>
-
-              {/* Quick Pricing Card on Desktop */}
-              <div className="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-lg p-6 space-y-5">
-                <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
-                    Course Tuition & Certification Fee
+            {/* Left Column (8 cols): Title & Stats, then DIRECTLY Curriculum, Overview, Prerequisites */}
+            <div className="lg:col-span-8 space-y-6">
+              {/* Course Title & Overview Card */}
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-4 shadow-xs">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="navy">{course.language}</Badge>
+                  <Badge variant="gold">{course.level}</Badge>
+                  <span className="text-xs font-medium text-slate-500">
+                    Apollo Tower Classroom & Online Dual-Mode
                   </span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-extrabold text-slate-900 font-editorial">
-                      ₹{course.samplePrice.toLocaleString("en-IN")}*
-                    </span>
-                    {course.originalPrice && (
-                      <span className="text-sm text-stone-400 line-through">
-                        ₹{course.originalPrice.toLocaleString("en-IN")}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[11px] text-stone-500">
-                    Includes study material, mock evaluations & recorded LMS access
-                  </p>
                 </div>
 
-                <div className="space-y-3 pt-2">
-                  {/* Dedicated Watch 2 Free Sample Classes Button right above Buy button */}
-                  <a
-                    href="#curriculum"
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs bg-emerald-50 text-emerald-800 border-2 border-emerald-300 hover:bg-emerald-100 hover:border-emerald-400 shadow-xs transition-all text-center group cursor-pointer"
-                  >
-                    <PlayCircle className="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform" />
-                    <span>🎬 Watch 2 Free Sample Classes (Unlocked)</span>
-                  </a>
+                <h1 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+                  {course.title}
+                </h1>
 
-                  {isAlreadyEnrolled ? (
-                    <Link
-                      href={`/student/learn/${course.id}/${course.sections[0]?.lectures[0]?.id || "lec-ger-1-1"}`}
-                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs bg-sky-600 text-white hover:bg-sky-700 shadow-md transition-all text-center"
-                    >
-                      <PlayCircle className="w-4 h-4 text-sky-200" />
-                      <span>Continue Learning Course</span>
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={() => setEnrollModalOpen(true)}
-                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs bg-sky-600 text-white hover:bg-sky-700 shadow-md hover:shadow-lg transition-all cursor-pointer"
-                    >
-                      <Sparkles className="w-4 h-4 text-sky-200" />
-                      <span>Buy Course & Enroll Now • ₹{course.samplePrice.toLocaleString("en-IN")}</span>
-                    </button>
-                  )}
+                <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                  {course.shortDescription}
+                </p>
 
+                <div className="flex flex-wrap items-center gap-6 pt-3 text-xs sm:text-sm text-slate-600 border-t border-slate-100">
+                  <div className="flex items-center gap-1.5">
+                    <Clock className="w-4 h-4 text-sky-600" />
+                    <span><strong>{course.durationHours}</strong> Hours Course</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <BookOpen className="w-4 h-4 text-sky-600" />
+                    <span><strong>{course.totalLectures}</strong> Recorded Lessons</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <User className="w-4 h-4 text-sky-600" />
+                    <span>{course.instructorName}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Curriculum Preview Section (DIRECTLY BELOW TITLE - NO GAP) */}
+              <div id="curriculum" className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 scroll-mt-24 shadow-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+                  <div>
+                    <h2 className="text-2xl font-bold text-slate-900">
+                      Curriculum & Module Syllabus
+                    </h2>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {course.sections.length} Modules &bull; {course.totalLectures} Recorded Lessons
+                    </p>
+                  </div>
+
+                  <span className="text-xs font-semibold text-sky-700 bg-sky-50 px-3 py-1 rounded-full self-start border border-sky-100">
+                    CEFR Standard Structure
+                  </span>
+                </div>
+
+                {/* 2 Free Sample Classes Callout Banner */}
+                <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-xs">
+                  <div className="flex items-start sm:items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                      <PlayCircle className="w-5 h-5 text-emerald-600" />
+                    </div>
+                    <div>
+                      <p className="font-extrabold text-emerald-950 text-sm">
+                        2 Free Preview Classes Unlocked for You
+                      </p>
+                      <p className="text-xs text-emerald-700 mt-0.5">
+                        Check teaching style, faculty pronunciation & listening exercises without paying anything upfront.
+                      </p>
+                    </div>
+                  </div>
                   <Link
-                    href={`/apply/offline?course=${encodeURIComponent(course.title)}`}
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-50 text-slate-800 border border-slate-200 hover:bg-slate-100 transition-all text-center"
+                    href={`/student/learn/${course.id}/${course.sections[0]?.lectures[0]?.id || "lec-ger-1-1"}`}
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white shrink-0 shadow-sm transition-all"
                   >
-                    <span>Indore Apollo Tower Offline Classroom Batch &rarr;</span>
+                    <span>Play Sample Class 1</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-
-                <div className="pt-3 border-t border-stone-100 space-y-2 text-xs text-stone-600">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Goethe / DELF mock exam included</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Apollo Tower audio lab access</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Lifetime recorded lecture review</span>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Body */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Left Column: Curriculum (First), Description, Highlights, Prerequisites */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Curriculum Preview Section (Top Priority as requested) */}
-            <div id="curriculum" className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6 scroll-mt-24 shadow-xs">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-900">
-                    Curriculum & Module Syllabus
-                  </h2>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {course.sections.length} Modules &bull; {course.totalLectures} Recorded Lessons
-                  </p>
-                </div>
-
-                <span className="text-xs font-semibold text-sky-700 bg-sky-50 px-3 py-1 rounded-full self-start border border-sky-100">
-                  CEFR Standard Structure
-                </span>
-              </div>
-
-              {/* 2 Free Sample Classes Callout Banner */}
-              <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-xs">
-                <div className="flex items-start sm:items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
-                    <PlayCircle className="w-5 h-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <p className="font-extrabold text-emerald-950 text-sm">
-                      🎬 2 Free Preview Classes Unlocked for You
-                    </p>
-                    <p className="text-xs text-emerald-700 mt-0.5">
-                      Check teaching style, faculty pronunciation & listening exercises without paying anything upfront!
-                    </p>
-                  </div>
-                </div>
-                <Link
-                  href={`/student/learn/${course.id}/${course.sections[0]?.lectures[0]?.id || "lec-ger-1-1"}`}
-                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white shrink-0 shadow-sm transition-all"
-                >
-                  <span>Play Sample Class 1</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
               </div>
 
               <div className="space-y-4">
@@ -546,8 +468,79 @@ export default function CourseDetailPage({
             </div>
           </div>
 
-          {/* Right Column: Instructor & Center Information */}
-          <div className="lg:col-span-4 space-y-6">
+          {/* Right Column: Sticky Pricing, Instructor & Center Information */}
+          <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+            {/* Quick Pricing Card on Desktop */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-lg p-6 space-y-5">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block">
+                  Course Tuition & Certification Fee
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-extrabold text-slate-900 font-editorial">
+                    ₹{course.samplePrice.toLocaleString("en-IN")}*
+                  </span>
+                  {course.originalPrice && (
+                    <span className="text-sm text-stone-400 line-through">
+                      ₹{course.originalPrice.toLocaleString("en-IN")}
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] text-stone-500">
+                  Includes study material, mock evaluations & recorded LMS access
+                </p>
+              </div>
+
+              <div className="space-y-3 pt-2">
+                <a
+                  href="#curriculum"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs bg-emerald-50 text-emerald-800 border-2 border-emerald-300 hover:bg-emerald-100 hover:border-emerald-400 shadow-xs transition-all text-center group cursor-pointer"
+                >
+                  <PlayCircle className="w-4 h-4 text-emerald-600 group-hover:scale-110 transition-transform" />
+                  <span>Watch 2 Free Sample Classes (Unlocked)</span>
+                </a>
+
+                {isAlreadyEnrolled ? (
+                  <Link
+                    href={`/student/learn/${course.id}/${course.sections[0]?.lectures[0]?.id || "lec-ger-1-1"}`}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs bg-sky-600 text-white hover:bg-sky-700 shadow-md transition-all text-center"
+                  >
+                    <PlayCircle className="w-4 h-4 text-sky-200" />
+                    <span>Continue Learning Course</span>
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => setEnrollModalOpen(true)}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-xs bg-sky-600 text-white hover:bg-sky-700 shadow-md hover:shadow-lg transition-all cursor-pointer"
+                  >
+                    <span>Buy Course & Enroll Now • ₹{course.samplePrice.toLocaleString("en-IN")}</span>
+                  </button>
+                )}
+
+                <Link
+                  href={`/apply/offline?course=${encodeURIComponent(course.title)}`}
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-50 text-slate-800 border border-slate-200 hover:bg-slate-100 transition-all text-center"
+                >
+                  <span>Indore Apollo Tower Offline Classroom Batch &rarr;</span>
+                </Link>
+              </div>
+
+              <div className="pt-3 border-t border-stone-100 space-y-2 text-xs text-stone-600">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Goethe / DELF mock exam included</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Apollo Tower audio lab access</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Lifetime recorded lecture review</span>
+                </div>
+              </div>
+            </div>
+
             {/* Instructor Profile Card */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 shadow-xs">
               <span className="text-[10px] font-bold uppercase tracking-wider text-sky-600 block">
@@ -718,11 +711,12 @@ export default function CourseDetailPage({
         </div>
       )}
 
-      {/* Unclosable Course Access Gate for Non-Logged-In Direct Visitors */}
+      {/* Course Access Gate for Non-Logged-In Direct Visitors */}
       <CourseUnlockModal
         course={course}
         isOpen={!isAccessUnlocked}
         onUnlocked={() => setIsAccessUnlocked(true)}
+        onClose={() => router.push("/courses")}
       />
     </PublicLayout>
   );

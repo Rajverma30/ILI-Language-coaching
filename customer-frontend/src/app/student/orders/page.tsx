@@ -26,7 +26,7 @@ export default function StudentOrdersPage() {
       <div className="space-y-3">
         <Breadcrumbs
           items={[
-            { label: "Student Portal", href: "/student" },
+            { label: "Your Account", href: "/student" },
             { label: "Purchase History & Receipts" },
           ]}
         />

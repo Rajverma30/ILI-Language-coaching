@@ -201,7 +201,7 @@ export const OfflineLeadForm: React.FC<OfflineLeadFormProps> = ({
           </div>
           <div className="flex justify-between">
             <span className="text-slate-500">Campus:</span>
-            <span className="font-semibold text-slate-800">🏛️ Apollo Tower, New Palasia, Indore</span>
+            <span className="font-semibold text-slate-800">Apollo Tower, New Palasia, Indore</span>
           </div>
           <div className="flex justify-between">
             <span className="text-slate-500">Batch Timing:</span>
@@ -426,8 +426,7 @@ export const OfflineLeadForm: React.FC<OfflineLeadFormProps> = ({
             </label>
             <div className="relative flex">
               <span className="inline-flex items-center gap-1 px-3 rounded-l-xl border border-r-0 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs">
-                <span>🇮🇳</span>
-                <span>+91</span>
+                <span>IN +91</span>
               </span>
               <input
                 id="offline-lead-phone"
@@ -443,7 +442,7 @@ export const OfflineLeadForm: React.FC<OfflineLeadFormProps> = ({
               />
             </div>
             <p className="text-[10px] text-slate-400">
-              🔒 Instant WhatsApp confirmation & batch syllabus will be sent to this number.
+              Instant WhatsApp confirmation & batch syllabus will be sent to this number.
             </p>
           </div>
 
@@ -509,7 +508,7 @@ export const OfflineLeadForm: React.FC<OfflineLeadFormProps> = ({
               100% Confidential
             </span>
             <span>&bull;</span>
-            <span>⭐ 4.9/5 Rating (Indore)</span>
+            <span>4.9/5 Rating (Indore)</span>
             <span>&bull;</span>
             <span>Apollo Tower Campus</span>
           </div>

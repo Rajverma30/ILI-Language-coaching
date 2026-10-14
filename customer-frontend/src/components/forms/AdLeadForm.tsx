@@ -243,7 +243,7 @@ export const AdLeadForm: React.FC<AdLeadFormProps> = ({
           <div className="flex justify-between">
             <span className="text-slate-500">Learning Mode:</span>
             <span className="font-semibold text-slate-800">
-              {submittedLead.mode === "offline" ? "🏛️ Apollo Tower, Indore Center" : "💻 Live Online Interactive"}
+              {submittedLead.mode === "offline" ? "Apollo Tower, Indore Center" : "Live Online Interactive"}
             </span>
           </div>
           <div className="flex justify-between">
@@ -537,8 +537,7 @@ export const AdLeadForm: React.FC<AdLeadFormProps> = ({
             </label>
             <div className="relative flex">
               <span className="inline-flex items-center gap-1 px-3 rounded-l-xl border border-r-0 border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs">
-                <span>🇮🇳</span>
-                <span>+91</span>
+                <span>IN +91</span>
               </span>
               <input
                 id="lead-mobile-phone"
@@ -554,7 +553,7 @@ export const AdLeadForm: React.FC<AdLeadFormProps> = ({
               />
             </div>
             <p className="text-[10px] text-slate-400">
-              🔒 Instant WhatsApp confirmation & demo access link will be sent to this number.
+              Instant WhatsApp confirmation & demo access link will be sent to this number.
             </p>
           </div>
 
@@ -647,7 +646,7 @@ export const AdLeadForm: React.FC<AdLeadFormProps> = ({
               100% Confidential
             </span>
             <span>&bull;</span>
-            <span>⭐ 4.9/5 Rating (Indore)</span>
+            <span>4.9/5 Rating (Indore)</span>
             <span>&bull;</span>
             <span>1,200+ Alumni</span>
           </div>

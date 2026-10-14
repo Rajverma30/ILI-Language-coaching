@@ -52,9 +52,12 @@ export class UltraMsgService {
       return { success: false, error: "Invalid recipient phone number" };
     }
 
+    // UltraMsg expects international digits WITHOUT leading + sign (e.g. 919826012345)
+    const ultraMsgTo = formattedTo.replace(/^\+/, "");
+
     const postData = querystring.stringify({
       token,
-      to: formattedTo,
+      to: ultraMsgTo,
       body,
     });
 
@@ -143,10 +146,10 @@ export class UltraMsgService {
     const now = Date.now();
     const lastProcessed = this.recentLeadsMap.get(dedupKey);
 
-    // 30-second deduplication window for identical submissions
-    if (lastProcessed && now - lastProcessed < 30000) {
+    // 5-second deduplication window for identical submissions
+    if (lastProcessed && now - lastProcessed < 5000) {
       console.log(
-        `[UltraMsg] 🛡️ Duplicate submission suppressed for ${cleanLeadPhone} (within 30s window).`
+        `[UltraMsg] Duplicate submission suppressed for ${cleanLeadPhone} (within 5s window).`
       );
       return;
     }
@@ -167,25 +170,24 @@ export class UltraMsgService {
     const courseName = lead.courseInterest || "Foreign Language Course";
     const slot = lead.preferredSlot || "Flexible Batch";
 
-    const message = `Namaste *${studentName}*! 🙏
+    const message = `Namaste *${studentName}*!
 
-Welcome to *ILI Foreign Languages Institute*!
+Thank you for your inquiry for *${courseName}* at *ILI Coaching Institute*, Indore. We have successfully received your request!
 
-Thank you for your interest in *${courseName}*. We have successfully received your inquiry! 🎉
+Indore Campus: Apollo Tower, MG Road, New Palasia, Indore
+Course: ${courseName}
+Batch Preference: ${slot}
+Learning Modes: Classroom Batches & Online Live Sessions
 
-📍 *Indore Campus:* Apollo Tower, MG Road, New Palasia, Indore
-🕒 *Preferred Batch:* ${slot}
-✨ *Learning Options:* Offline Classroom Sessions & Live Online Interactive Classes
+Our academic counselor will contact you shortly with the syllabus, batch schedule, and fee details.
 
-Our senior academic counselor will connect with you shortly to share the curriculum syllabus, batch schedule, and demo counseling details.
-
-If you have any questions right now, reply directly to this WhatsApp message or call our admissions desk at *+91 98260 12345*.
+For immediate support, feel free to reply to this message.
 
 Warm regards,
-*ILI Foreign Languages Institute, Indore*`;
+ILI Coaching Institute, Indore`;
 
     try {
-      console.log(`[UltraMsg] 🚀 Sending student welcome message to ${lead.phone}...`);
+      console.log(`[UltraMsg] Sending student welcome message to ${lead.phone}...`);
       await this.sendMessage(lead.phone, message);
     } catch (err: any) {
       console.error("[UltraMsg] Error in sendLeadWelcomeMessage:", err?.message || err);

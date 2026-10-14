@@ -53,8 +53,7 @@ export default function StudentDashboardPage() {
       <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-xs font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-            <span>Active Student Portal</span>
+            <span>Active Account</span>
           </div>
           <h1 className="font-editorial text-2xl sm:text-3xl font-extrabold text-slate-900">
             Willkommen, {currentUser?.name || "Raj Verma"}!

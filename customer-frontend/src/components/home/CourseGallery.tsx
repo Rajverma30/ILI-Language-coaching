@@ -261,7 +261,7 @@ export const CourseGallery: React.FC = () => {
                     <span className="text-xs font-black uppercase tracking-wider">Most In-Demand Programs</span>
                   </div>
                   <h3 className="text-2xl font-black text-white tracking-tight">
-                    🔥 Most Famous & Top-Rated Batches
+                    Most Famous & Top-Rated Batches
                   </h3>
                   <p className="text-xs text-slate-400">
                     Foundational A1 batches & Executive English with highest enrollment in Indore & Central India.
@@ -286,7 +286,7 @@ export const CourseGallery: React.FC = () => {
                     <span className="text-xs font-black uppercase tracking-wider">Newly Introduced Curricula</span>
                   </div>
                   <h3 className="text-2xl font-black text-white tracking-tight">
-                    ✨ New Releases & Advanced Curricula
+                    New Releases & Advanced Curricula
                   </h3>
                   <p className="text-xs text-slate-400">
                     JLPT N5 Japanese, Goethe B1 exam specialization & Exclusive English Fluency.
@@ -311,7 +311,7 @@ export const CourseGallery: React.FC = () => {
                     <span className="text-xs font-black uppercase tracking-wider">Jobseeker & Higher Education</span>
                   </div>
                   <h3 className="text-2xl font-black text-white tracking-tight">
-                    💼 Career Growth & European Visa Programs
+                    Career Growth & European Visa Programs
                   </h3>
                   <p className="text-xs text-slate-400">
                     Targeted preparation for Germany Opportunity Card, Blue Card, Canada PR, IELTS & MNC jobs.
@@ -328,13 +328,26 @@ export const CourseGallery: React.FC = () => {
             </div>
           </>
         )}
+
+        {/* Global View More Courses Button */}
+        <div className="pt-6 text-center">
+          <button
+            type="button"
+            onClick={() => router.push("/courses")}
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm shadow-xl shadow-sky-600/25 transition-all cursor-pointer transform hover:-translate-y-0.5"
+          >
+            <span>View More Courses</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
-      {/* Unclosable Course Access Modal */}
+      {/* Course Access Modal with Dismiss Support */}
       <CourseUnlockModal
         course={selectedCourseForUnlock}
         isOpen={Boolean(selectedCourseForUnlock)}
         onUnlocked={() => setSelectedCourseForUnlock(null)}
+        onClose={() => setSelectedCourseForUnlock(null)}
       />
     </section>
   );
