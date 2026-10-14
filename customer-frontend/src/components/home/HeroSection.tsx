@@ -10,6 +10,7 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { SmartCourseSearch } from "@/components/search/SmartCourseSearch";
 
 export const HeroSection: React.FC = () => {
   return (
@@ -35,6 +36,15 @@ export const HeroSection: React.FC = () => {
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
               Immersive <strong>German, French, Spanish, Japanese & Executive English</strong> coaching at Apollo Tower, MG Road, New Palasia, Indore. Structured for Goethe-Zertifikat, DELF, DELE, and IELTS exam distinction with hybrid recorded lecture revision.
             </p>
+
+            {/* Top Smart Typo-Tolerant Course Search */}
+            <div className="pt-1 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-sky-800">
+                <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+                <span>Instant Course & Syllabus Search (Typo-Tolerant):</span>
+              </div>
+              <SmartCourseSearch />
+            </div>
 
             {/* Key Value Badges */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs font-medium text-slate-700">

@@ -32,9 +32,14 @@ export default function CoursesCataloguePage() {
   const [selectedCourseForUnlock, setSelectedCourseForUnlock] = useState<Course | null>(null);
 
   const handleCourseClick = (e: React.MouseEvent, course: Course) => {
+    // Clean up stale localStorage flag
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("ili_visitor_verified");
+    }
+
     const isVerified =
       Boolean(currentUser) ||
-      (typeof window !== "undefined" && Boolean(localStorage.getItem("ili_visitor_verified")));
+      (typeof window !== "undefined" && Boolean(sessionStorage.getItem("ili_lead_unlocked")));
 
     if (!isVerified) {
       e.preventDefault();

@@ -76,16 +76,19 @@ export const CourseUnlockModal: React.FC<CourseUnlockModalProps> = ({
     try {
       addLead(leadPayload);
 
-      // Save unlocked credentials to localStorage so visitor is permanently verified
+      // Save unlocked credentials to sessionStorage for current session
       if (typeof window !== "undefined") {
-        localStorage.setItem(
-          "ili_visitor_verified",
+        sessionStorage.setItem("ili_lead_unlocked", "true");
+        sessionStorage.setItem(
+          "ili_lead_data",
           JSON.stringify({
             fullName: trimmedName,
             phone: formattedPhone,
             unlockedAt: new Date().toISOString(),
           })
         );
+        // Clean up legacy persistent localStorage key so fresh visitors always see lead form
+        localStorage.removeItem("ili_visitor_verified");
       }
 
       onUnlocked?.();

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDemo } from "@/context/DemoContext";
@@ -13,13 +13,27 @@ import {
   Sparkles,
   User,
   ArrowRight,
+  Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { SmartCourseSearch } from "@/components/search/SmartCourseSearch";
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const { currentUser, logout } = useDemo();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchModalOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const isActive = (path: string) => {
     if (path === "/" && pathname !== "/") return false;
@@ -73,6 +87,19 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
+          {/* Quick Search Button on Desktop */}
+          <button
+            type="button"
+            onClick={() => setSearchModalOpen(true)}
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/70 text-slate-500 hover:text-slate-800 text-xs font-semibold border border-slate-200 transition-all cursor-pointer"
+          >
+            <Search className="w-3.5 h-3.5 text-sky-600" />
+            <span>Search courses...</span>
+            <kbd className="hidden xl:inline-block px-1.5 py-0.5 rounded bg-white text-[10px] text-slate-400 font-mono shadow-2xs">
+              Ctrl K
+            </kbd>
+          </button>
+
           {/* Right Action Buttons - Customer Portal Only */}
           <div className="hidden sm:flex items-center gap-3">
             <Button
@@ -119,11 +146,19 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex lg:hidden items-center gap-2">
+          {/* Mobile Menu & Search Button */}
+          <div className="flex lg:hidden items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => setSearchModalOpen(true)}
+              className="p-2.5 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+              aria-label="Search courses"
+            >
+              <Search className="w-5 h-5 text-slate-700" />
+            </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
+              className="p-2.5 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
               aria-label="Toggle Navigation"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -193,6 +228,42 @@ export const Navbar: React.FC = () => {
                 </Link>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Smart Search Modal Overlay */}
+      {searchModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-950/75 backdrop-blur-sm animate-in fade-in duration-150"
+          onClick={() => setSearchModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-2xl bg-white rounded-3xl p-6 shadow-2xl border border-slate-200 animate-in zoom-in-95 duration-150 relative space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold">
+                  <Search className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">Smart Course Search</h3>
+                  <p className="text-[11px] text-slate-500">
+                    Typo-tolerant instant search for German, English, French, Spanish & Japanese
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSearchModalOpen(false)}
+                className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <SmartCourseSearch onSelectCourse={() => setSearchModalOpen(false)} />
           </div>
         </div>
       )}

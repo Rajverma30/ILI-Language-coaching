@@ -32,9 +32,13 @@ export const RecentlyViewedSection: React.FC = () => {
   if (recentCourses.length === 0) return null;
 
   const handleCourseClick = (e: React.MouseEvent, course: Course) => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("ili_visitor_verified");
+    }
+
     const isVerified =
       Boolean(currentUser) ||
-      (typeof window !== "undefined" && Boolean(localStorage.getItem("ili_visitor_verified")));
+      (typeof window !== "undefined" && Boolean(sessionStorage.getItem("ili_lead_unlocked")));
 
     if (!isVerified) {
       e.preventDefault();
