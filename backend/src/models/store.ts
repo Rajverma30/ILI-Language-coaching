@@ -82,12 +82,22 @@ class DataStore {
   // ================= USERS =================
   findUserByEmail(email: string): User | undefined {
     const normalized = email.trim().toLowerCase();
-    return this.users.find(
-      (u) =>
-        u.email.toLowerCase() === normalized ||
-        (u.role === "admin" &&
-          (normalized === "admin" || u.email.toLowerCase() === "admin@ililanguages.in"))
-    );
+    const aliasNormalized =
+      normalized === "vermaraj01110@gmial.com" ? "vermaraj01110@gmail.com" : normalized;
+
+    return this.users.find((u) => {
+      const uEmail = u.email.toLowerCase();
+      if (uEmail === normalized || uEmail === aliasNormalized) {
+        return true;
+      }
+      if (
+        u.role === "admin" &&
+        (normalized === "admin" || normalized === "admin@ililanguages.in")
+      ) {
+        return true;
+      }
+      return false;
+    });
   }
 
   findUserById(id: string): User | undefined {

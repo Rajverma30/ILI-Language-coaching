@@ -183,7 +183,10 @@ export const DemoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     // Local fallback for local development testing
-    if (trimmedEmail === "vermaraj01110@gmail.com" && trimmedPass === "12345") {
+    if (
+      (trimmedEmail === "vermaraj01110@gmail.com" || trimmedEmail === "vermaraj01110@gmial.com") &&
+      trimmedPass === "12345"
+    ) {
       const studentUser: User = {
         id: "std-raj-1",
         name: "Raj Verma",

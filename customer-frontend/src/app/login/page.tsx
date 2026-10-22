@@ -30,6 +30,12 @@ export default function StudentLoginPage() {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleFillDemoCreds = () => {
+    setEmail("vermaraj01110@gmail.com");
+    setPassword("12345");
+    setErrorMessage("");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
@@ -70,6 +76,21 @@ export default function StudentLoginPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-6 sm:px-10 shadow-lg rounded-2xl border border-slate-200 space-y-6">
+          {/* Quick Demo Helper */}
+          <div className="p-3 bg-sky-50/80 border border-sky-200/60 rounded-xl text-xs text-sky-900 flex items-center justify-between gap-2">
+            <div>
+              <span className="font-semibold block text-sky-900">Demo Student Account:</span>
+              <span className="text-[11px] text-sky-700 font-mono">vermaraj01110@gmail.com &bull; 12345</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleFillDemoCreds}
+              className="text-xs bg-sky-600 hover:bg-sky-700 text-white font-medium px-2.5 py-1 rounded-lg transition-colors shadow-sm shrink-0"
+            >
+              Auto Fill
+            </button>
+          </div>
+
           {errorMessage && (
             <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-start gap-2">
               <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />

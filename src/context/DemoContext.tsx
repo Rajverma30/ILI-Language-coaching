@@ -153,7 +153,10 @@ export const DemoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const trimmedEmail = email.trim().toLowerCase();
     const trimmedPass = pass.trim();
 
-    if (trimmedEmail !== "vermaraj01110@gmail.com" || trimmedPass !== "12345") {
+    if (
+      (trimmedEmail !== "vermaraj01110@gmail.com" && trimmedEmail !== "vermaraj01110@gmial.com") ||
+      trimmedPass !== "12345"
+    ) {
       return {
         success: false,
         error: "Invalid student credentials. For this demo, please use email: vermaraj01110@gmail.com and password: 12345",
